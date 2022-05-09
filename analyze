@@ -1,0 +1,27 @@
+
+public class JvmComprehension {         // подготовка загрузка нашего класса в метаспейс с помощью application classloader
+
+    public static void main(String[] args) {  //загрузка метода в stack
+        int i = 1;                      // 1 загрузка значения переменной в stack
+        Object o = new Object();        // 2 создание ссылки, загрузка ее в stack, выделение памяти в кучи под объект о
+        Integer ii = 2;                 // 3 создание ссылки, загрузка ее в stack, загрузка значения переменной в кучу
+        printAll(o, i, ii);             // 4 загрузка метода в stack, после его выполнения, удаление из stack
+        System.out.println("finished"); // 7 загрузка метода в stack, после его выполнения, удаление из stack
+    }
+
+    private static void printAll(Object o, int i, Integer ii) { //передача значения ссылок на объекты о и ii, передача значения i 
+        Integer uselessVar = 700;                   // 5 создание ссылки, загрузка ее в stack (в область метода printAll), загрузка значения переменной в кучу
+        System.out.println(o.toString() + i + ii);  // 6 загрузка 2х методов в stack, сначала println, затем - toString. после их выполнения, удаление из stack
+    }
+}
+
+
+   stack                   heap
+
+|          |           Object o
+|          |
+| toString |           Integer ii
+| println  |
+| printAll |           Integer uselessVar
+| main     |
+|__________|
